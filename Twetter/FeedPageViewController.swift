@@ -12,9 +12,14 @@ import TwitterKit
 class FeedPageViewController: UIPageViewController {
     
     let manager = FeedManager.sharedInstance
-    var pageViews = NSMutableArray()
+    
+    var currentController: FeedViewController! = nil
+    var nextController: FeedViewController! = nil
+    
     var currentPage = 0
     var nextPage = -1
+    
+    @IBOutlet weak var addButton: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,138 +27,78 @@ class FeedPageViewController: UIPageViewController {
         dataSource = self
         delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
-        
-        manager.configureWithViewController(self)
-        manager.getFeeds()
-        
-        if let firstViewController = pageViews.firstObject {
-            setViewControllers([firstViewController as! UIViewController],
-                direction: .Forward,
-                animated: true,
-                completion: nil)
+                
+        if manager.feedCount() != 0 {
+            let firstViewController = manager.makeFeedViewController(manager.feedAtIndex(0))
+            currentController = firstViewController
+            setViewControllers([firstViewController], direction: .Forward, animated: true, completion: nil)
+        } else {
+            configureFeedlessView()
         }
         
+        if manager.feedCount() == 1 {
+            disablePaging()
+        }
         configureTopView()
     }
     
     func configureTopView() {
         let topBarTapRecognizer = UITapGestureRecognizer(target: self, action: "scrollToTop")
-        
-        let topBar = UIView()
-        topBar.addGestureRecognizer(topBarTapRecognizer)
-        topBar.backgroundColor = UIColor.whiteColor()
-        topBar.translatesAutoresizingMaskIntoConstraints = false
-        
-        let titleLabel = UILabel()
-        titleLabel.text = "My Feeds"
-        titleLabel.font = UIFont.systemFontOfSize(25.0, weight: UIFontWeightThin)
-        titleLabel.textColor = UIColor.blackColor()
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        let addFeedButton = UIButton(type: .Custom)
-        if let image = UIImage(named: "plus") {
-            addFeedButton.setImage(image, forState: .Normal)
-        }
-        addFeedButton.addTarget(self, action: "presentAddFeedAlert", forControlEvents: .TouchUpInside)
-        addFeedButton.translatesAutoresizingMaskIntoConstraints = false
-        
-        let menuButton = UIButton(type: .Custom)
-        menuButton.setTitle("Menu", forState: .Normal)
-        menuButton.titleLabel?.font = UIFont.systemFontOfSize(20.0)
-        menuButton.setTitleColor(colorWithHexString("#00aced"), forState: .Normal)
-        menuButton.tintColor = colorWithHexString("#00aced")
-        menuButton.addTarget(self, action: "backToMenu", forControlEvents: .TouchUpInside)
-        menuButton.translatesAutoresizingMaskIntoConstraints = false
+        topBarTapRecognizer.cancelsTouchesInView = false
+        self.navigationController?.navigationBar.addGestureRecognizer(topBarTapRecognizer)
         
         let composeTweetButton = UIButton(type: .Custom)
         if let image = UIImage(named: "tweet") {
             composeTweetButton.setImage(image, forState: .Normal)
         }
+        composeTweetButton.frame = CGRectMake(0, 0, 30, 25)
         composeTweetButton.addTarget(self, action: "composeTweet", forControlEvents: .TouchUpInside)
-        composeTweetButton.translatesAutoresizingMaskIntoConstraints = false
         
-        topBar.addSubview(titleLabel)
-        topBar.addSubview(addFeedButton)
-        topBar.addSubview(composeTweetButton)
-        topBar.addSubview(menuButton)
+        let tweetBarButton = UIBarButtonItem(customView: composeTweetButton)
         
-        self.view.addSubview(topBar)
+        let barButtons: [UIBarButtonItem] = [addButton, tweetBarButton]
+        self.navigationItem.rightBarButtonItems = barButtons
+    }
+    
+    func configureFeedlessView() {
+        let feedlessViewController = UIViewController()
+        feedlessViewController.view.backgroundColor = UIColor.brownColor()
+        let label = UILabel()
+        label.text = "no feeds"
+        label.backgroundColor = UIColor.redColor()
+        label.center = feedlessViewController.view.center
+        feedlessViewController.view.addSubview(label)
+        setViewControllers([feedlessViewController], direction: .Forward, animated: true, completion: nil)
         
-        let viewsDictionary = [
-            "topBar" : topBar,
-            "titleLabel" : titleLabel,
-            "addFeedButton" : addFeedButton,
-            "composeTweetButton" : composeTweetButton,
-            "menuButton" : menuButton]
-        
-        let topBarViewHorizontalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-0-[topBar]-0-|",
-            options: NSLayoutFormatOptions(rawValue:0),
-            metrics: nil, views: viewsDictionary)
-        
-        let topBarViewVerticalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:[topBar(64)]",
-            options: NSLayoutFormatOptions(rawValue:0),
-            metrics: nil, views: viewsDictionary)
-        
-        let menuButtonVerticalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-25-[menuButton]",
-            options: NSLayoutFormatOptions(rawValue:0),
-            metrics: nil, views: viewsDictionary)
-        
-        let menuButtonHorizontalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:|-20-[menuButton]",
-            options: NSLayoutFormatOptions(rawValue:0),
-            metrics: nil, views: viewsDictionary)
-        
-        let tweetButtonVerticalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-25-[composeTweetButton(27)]",
-            options: NSLayoutFormatOptions(rawValue:0),
-            metrics: nil, views: viewsDictionary)
-        
-        let addButtonHorizontalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
-            "H:[composeTweetButton(35)]-20-[addFeedButton(25)]-20-|",
-            options: NSLayoutFormatOptions(rawValue:0),
-            metrics: nil, views: viewsDictionary)
-        
-        let addButtonVerticalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-25-[addFeedButton(25)]",
-            options: NSLayoutFormatOptions(rawValue:0),
-            metrics: nil, views: viewsDictionary)
-        
-        let titleLabelXCenterConstraint = NSLayoutConstraint(item: titleLabel, attribute: .CenterX, relatedBy: .Equal, toItem: topBar, attribute: .CenterX, multiplier: 1, constant: 0)
-        
-        let titleLabelViewVerticalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|-20-[titleLabel]-0-|",
-            options: NSLayoutFormatOptions(rawValue:0),
-            metrics: nil, views: viewsDictionary)
-        
-        self.view.addConstraints(topBarViewHorizontalConstraint)
-        self.view.addConstraints(topBarViewVerticalConstraint)
-        
-        topBar.addConstraints(menuButtonVerticalConstraint)
-        topBar.addConstraints(menuButtonHorizontalConstraint)
-        topBar.addConstraints(tweetButtonVerticalConstraint)
-        topBar.addConstraints(addButtonHorizontalConstraint)
-        topBar.addConstraints(addButtonVerticalConstraint)
-        
-        topBar.addConstraint(titleLabelXCenterConstraint)
-        topBar.addConstraints(titleLabelViewVerticalConstraint)
+        disablePaging()
+    }
+    
+    func disablePaging() {
+        for view in self.view.subviews {
+            if let subView = view as? UIScrollView {
+                subView.scrollEnabled = false
+            }
+        }
+    }
+    
+    func enablePaging() {
+        for view in self.view.subviews {
+            if let subView = view as? UIScrollView {
+                subView.scrollEnabled = true
+            }
+        }
     }
     
     func scrollToTop() {
-        let controller = pageViews.objectAtIndex(currentPage).childViewControllers[0] as! TWTRTimelineViewController
-        controller.tableView.setContentOffset(CGPointZero, animated: true)
-    }
-    
-    func addFeedViewController(vc: UIViewController) {
-        pageViews.addObject(vc)
+        if currentController != nil {
+            let controller = currentController.childViewControllers[0] as! TWTRTimelineViewController
+            controller.tableView.setContentOffset(CGPointZero, animated: true)
+        }
     }
     
     func composeTweet() {
         let composer = TWTRComposer()
         
-        // Called from a UIViewController
         composer.showFromViewController(self) { result in
             if (result == TWTRComposerResult.Cancelled) {
                 print("Tweet composition cancelled")
@@ -164,11 +109,7 @@ class FeedPageViewController: UIPageViewController {
         }
     }
     
-    func backToMenu() {
-        dismissViewControllerAnimated(true) { () -> Void in }
-    }
-    
-    func presentAddFeedAlert() {
+    @IBAction func presentAddFeedAlert(sender: UIButton) {
         
         let alertController = UIAlertController(title: "Add Feed", message: "Enter your custom query", preferredStyle: .Alert)
         
@@ -176,7 +117,13 @@ class FeedPageViewController: UIPageViewController {
             let feedTextField = alertController.textFields![0] as UITextField
             
             self.manager.addFeed(feedTextField.text!)
-            self.manager.addFeedPage(feedTextField.text!)
+            
+            if self.manager.feedCount() == 1 {
+                self.setViewControllers([self.manager.makeFeedViewController(self.manager.feedAtIndex(0))], direction: .Forward, animated: true, completion: nil)
+            }
+            if self.manager.feedCount() == 2 {
+                self.enablePaging()
+            }
         }
         addAction.enabled = false
         
@@ -204,41 +151,43 @@ extension FeedPageViewController: UIPageViewControllerDataSource {
             var curr = currentPage - 1
             
             if curr < 0 {
-                curr = pageViews.count-1
+                curr = manager.feedCount()-1
             }
             
-            guard pageViews.count > curr else {
+            guard manager.feedCount() > curr else {
                 return nil
             }
             
-            return pageViews.objectAtIndex(curr) as? UIViewController
+            return manager.makeFeedViewController(manager.feedAtIndex(curr))
     }
     
     func pageViewController(pageViewController: UIPageViewController,
         viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
             var curr = currentPage + 1
             
-            if curr == pageViews.count {
+            if curr == manager.feedCount() {
                 curr = 0
             }
             
-            guard pageViews.count > curr else {
+            guard manager.feedCount() > curr else {
                 return nil
             }
             
-            return pageViews.objectAtIndex(curr) as? UIViewController
+            return manager.makeFeedViewController(manager.feedAtIndex(curr))
     }
 }
 
 extension FeedPageViewController: UIPageViewControllerDelegate {
     
     func pageViewController(pageViewController: UIPageViewController, willTransitionToViewControllers pendingViewControllers: [UIViewController]) {
-        let nextController = pendingViewControllers.first
-        nextPage = pageViews.indexOfObject(nextController!)
+        nextController = pendingViewControllers.first as! FeedViewController
+        nextPage = manager.indexForFeed(nextController.query)
     }
     
     func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         if (completed) {
+            currentController = nextController
+            nextController = nil
             currentPage = nextPage
         }
     }

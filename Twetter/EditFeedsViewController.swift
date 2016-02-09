@@ -26,10 +26,6 @@ class EditFeedsViewController: UIViewController {
         self.tableview.addSubview(self.refreshControl)
     }
     
-    @IBAction func backToMenu(sender: UIButton) {
-        self.dismissViewControllerAnimated(true, completion:nil)
-    }
-    
     func handleRefresh(refreshControl: UIRefreshControl) {
         self.tableview.reloadData()
         refreshControl.endRefreshing()
@@ -65,28 +61,17 @@ class EditFeedsViewController: UIViewController {
 }
 
 extension EditFeedsViewController: UITableViewDataSource {
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
-    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        return UIView()
-    }
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        let feeds = prefs.valueForKey("feeds") as! NSArray
-        return feeds.count
+        return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return manager.feedCount()
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("queryCell", forIndexPath: indexPath) as! QueryCell
-        let feeds = prefs.valueForKey("feeds") as! NSArray
-        cell.queryLabel.text = feeds.objectAtIndex(indexPath.section) as? String
+        cell.queryLabel.text = manager.feedTitleAtIndex(indexPath.row)
         
         return cell
     }
@@ -99,10 +84,7 @@ extension EditFeedsViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
-            let feeds = prefs.valueForKey("feeds") as! NSArray
-            let mutableFeeds = feeds.mutableCopy()
-            mutableFeeds.removeObjectAtIndex(indexPath.section)
-            prefs.setValue(mutableFeeds, forKey: "feeds")
+            manager.removeFeed(indexPath.row)
             self.tableview.reloadData()
         }
     }

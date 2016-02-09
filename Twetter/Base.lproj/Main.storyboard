@@ -3,9 +3,24 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="INy-a6-Xyr">
+            <objects>
+                <navigationController id="N4l-Mi-PY2" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="i8z-p6-tJp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="jGy-4g-yr5" kind="relationship" relationship="rootViewController" id="QKQ-mH-SVN"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TO7-DG-Fga" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1122" y="301"/>
+        </scene>
         <!--Login View Controller-->
         <scene sceneID="vN4-d0-NdQ">
             <objects>
@@ -66,12 +81,12 @@
                     </view>
                     <connections>
                         <outlet property="loginButton" destination="0bW-96-MTG" id="8Gi-z5-BsT"/>
-                        <segue destination="jGy-4g-yr5" kind="presentation" identifier="logIn" modalTransitionStyle="flipHorizontal" id="KUe-nf-JKu"/>
+                        <segue destination="N4l-Mi-PY2" kind="presentation" identifier="logIn" id="Hgg-qF-83e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wik-u5-RJv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-336" y="301"/>
+            <point key="canvasLocation" x="-1908" y="301"/>
         </scene>
         <!--Menu View Controller-->
         <scene sceneID="WOh-UN-aYa">
@@ -92,7 +107,7 @@
                                     <color key="titleColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="dWD-jP-qSJ" kind="presentation" id="isO-pA-yG9"/>
+                                    <segue destination="dWD-jP-qSJ" kind="show" id="isO-pA-yG9"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Pp-SS-H9C">
@@ -102,7 +117,7 @@
                                     <color key="titleColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <segue destination="irT-dU-vMZ" kind="presentation" id="LSY-3v-1wr"/>
+                                    <segue destination="irT-dU-vMZ" kind="show" id="LSY-3v-1wr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u3Z-FH-EaT">
@@ -125,15 +140,16 @@
                             <constraint firstItem="ZcO-MC-C7B" firstAttribute="top" secondItem="5Pp-SS-H9C" secondAttribute="bottom" constant="30" id="mae-1T-ax2"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="eGu-GS-LON"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QKE-YO-mbf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="372" y="301"/>
+            <point key="canvasLocation" x="-340" y="301"/>
         </scene>
-        <!--Edit Feeds View Controller-->
+        <!--My Feeds-->
         <scene sceneID="Rpf-SL-Hhr">
             <objects>
-                <viewController id="dWD-jP-qSJ" customClass="EditFeedsViewController" customModule="Twetter" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="dWD-jP-qSJ" customClass="EditFeedsViewController" customModule="Twetter" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qeq-q5-AaE"/>
                         <viewControllerLayoutGuide type="bottom" id="ATc-bk-17m"/>
@@ -142,7 +158,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CZD-JD-UPs">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CZD-JD-UPs">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                                 <color key="backgroundColor" red="0.0" green="0.67450980390000004" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -150,7 +166,7 @@
                                         <rect key="frame" x="0.0" y="28" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="oiS-Lo-LUz" id="I4j-0U-5gw">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Query" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UB9-3M-ore">
@@ -177,78 +193,49 @@
                                     <outlet property="delegate" destination="dWD-jP-qSJ" id="smt-MG-7WX"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aAR-kv-Bth">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="64"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Feeds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c0C-YZ-zek">
-                                        <rect key="frame" x="249" y="28" width="102" height="30"/>
-                                        <fontDescription key="fontDescription" type="system" weight="thin" pointSize="25"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9E9-Sn-aZq">
-                                        <rect key="frame" x="20" y="25" width="51" height="36"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Menu"/>
-                                        <connections>
-                                            <action selector="backToMenu:" destination="dWD-jP-qSJ" eventType="touchUpInside" id="6UP-8G-lln"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WsS-e5-b21">
-                                        <rect key="frame" x="555" y="30.5" width="25" height="25"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="25" id="Fmz-uU-ckT"/>
-                                            <constraint firstAttribute="height" constant="25" id="jcU-CH-jwr"/>
-                                        </constraints>
-                                        <state key="normal" image="plus"/>
-                                        <connections>
-                                            <action selector="presentAddFeedAlert" destination="dWD-jP-qSJ" eventType="touchUpInside" id="wyj-0K-5e2"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="07u-1i-Dln"/>
-                                    <constraint firstItem="c0C-YZ-zek" firstAttribute="centerX" secondItem="aAR-kv-Bth" secondAttribute="centerX" id="20j-w4-pjb"/>
-                                    <constraint firstItem="c0C-YZ-zek" firstAttribute="top" secondItem="aAR-kv-Bth" secondAttribute="topMargin" constant="20" id="LYm-EL-H1r"/>
-                                    <constraint firstItem="WsS-e5-b21" firstAttribute="centerY" secondItem="c0C-YZ-zek" secondAttribute="centerY" id="YCa-nv-tH0"/>
-                                    <constraint firstAttribute="trailing" secondItem="WsS-e5-b21" secondAttribute="trailing" constant="20" id="bxX-K0-ZUr"/>
-                                    <constraint firstItem="9E9-Sn-aZq" firstAttribute="centerY" secondItem="c0C-YZ-zek" secondAttribute="centerY" id="ecs-oD-Mlk"/>
-                                    <constraint firstItem="9E9-Sn-aZq" firstAttribute="leading" secondItem="aAR-kv-Bth" secondAttribute="leading" constant="20" id="v7U-Cv-vew"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="CZD-JD-UPs" firstAttribute="leading" secondItem="hfm-n2-U6Y" secondAttribute="leading" id="2NR-p3-P1x"/>
-                            <constraint firstAttribute="trailing" secondItem="aAR-kv-Bth" secondAttribute="trailing" id="CKd-Oi-3dL"/>
                             <constraint firstItem="ATc-bk-17m" firstAttribute="top" secondItem="CZD-JD-UPs" secondAttribute="bottom" id="Fuj-gh-C86"/>
                             <constraint firstAttribute="trailing" secondItem="CZD-JD-UPs" secondAttribute="trailing" id="TF9-l9-vIg"/>
-                            <constraint firstItem="CZD-JD-UPs" firstAttribute="top" secondItem="aAR-kv-Bth" secondAttribute="bottom" id="nw1-18-lkG"/>
-                            <constraint firstItem="aAR-kv-Bth" firstAttribute="leading" secondItem="hfm-n2-U6Y" secondAttribute="leading" id="yg1-Gy-zL4"/>
-                            <constraint firstItem="aAR-kv-Bth" firstAttribute="top" secondItem="hfm-n2-U6Y" secondAttribute="top" id="zaS-E0-gr1"/>
+                            <constraint firstItem="CZD-JD-UPs" firstAttribute="top" secondItem="qeq-q5-AaE" secondAttribute="bottom" id="fcs-2q-Jzl"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="My Feeds" id="EC3-9M-uMB">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="xhk-nd-kke">
+                            <connections>
+                                <action selector="presentAddFeedAlert" destination="dWD-jP-qSJ" id="KLS-dz-q5J"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableview" destination="CZD-JD-UPs" id="ce6-Jw-FPO"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bpj-eS-aiB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1111" y="572"/>
+            <point key="canvasLocation" x="527" y="600"/>
         </scene>
-        <!--Feed Page View Controller-->
+        <!--Browse Feeds-->
         <scene sceneID="x6h-yr-yjo">
             <objects>
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="irT-dU-vMZ" customClass="FeedPageViewController" customModule="Twetter" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="UY1-3w-iUC"/>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" title="Browse Feeds" id="UY1-3w-iUC">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="dDk-Ek-206">
+                            <connections>
+                                <action selector="presentAddFeedAlert:" destination="irT-dU-vMZ" id="kRc-pI-bUR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="addButton" destination="dDk-Ek-206" id="tH2-zc-6Nu"/>
+                    </connections>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hYc-6w-SKk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1111" y="-83"/>
+            <point key="canvasLocation" x="527" y="-91"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="plus" width="919" height="919"/>
-    </resources>
 </document>

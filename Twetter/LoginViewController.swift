@@ -27,6 +27,8 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func signInWithTwitter(sender: UIButton) {
+        sender.enabled = false
+        
         Twitter.sharedInstance().logInWithCompletion { (session, error) in
             if let unwrappedSession = session {
                 let alert = UIAlertController(title: "Logged In",
@@ -34,10 +36,12 @@ class LoginViewController: UIViewController {
                     preferredStyle: UIAlertControllerStyle.Alert
                 )
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {_ in
+                    sender.enabled = true
                     self.loggedIn()
                 }))
                 self.presentViewController(alert, animated: true, completion: nil)
             } else {
+                sender.enabled = true
                 NSLog("Login error: %@", error!.localizedDescription);
             }
         }
@@ -46,5 +50,4 @@ class LoginViewController: UIViewController {
     func loggedIn() {
         performSegueWithIdentifier("logIn", sender: nil)
     }
-    
 }
