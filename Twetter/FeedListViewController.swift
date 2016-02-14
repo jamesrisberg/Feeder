@@ -1,5 +1,5 @@
 //
-//  EditFeedsViewController.swift
+//  FeedListViewController.swift
 //  Twetter
 //
 //  Created by James on 2/7/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditFeedsViewController: UIViewController {
+class FeedListViewController: UIViewController {
     
     let prefs = NSUserDefaults.standardUserDefaults()
     @IBOutlet weak var tableview: UITableView!
@@ -24,6 +24,11 @@ class EditFeedsViewController: UIViewController {
     
     override func viewDidLoad() {
         self.tableview.addSubview(self.refreshControl)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
@@ -60,7 +65,7 @@ class EditFeedsViewController: UIViewController {
     }
 }
 
-extension EditFeedsViewController: UITableViewDataSource {
+extension FeedListViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -77,7 +82,7 @@ extension EditFeedsViewController: UITableViewDataSource {
     }
 }
 
-extension EditFeedsViewController: UITableViewDelegate {
+extension FeedListViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
