@@ -1,5 +1,5 @@
 //
-//  QueryCell.swift
+//  FeedListCell.swift
 //  Twetter
 //
 //  Created by James on 2/7/16.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-class QueryCell: UITableViewCell {
-    @IBOutlet weak var queryLabel: UILabel!
+class FeedListCell: UITableViewCell {
+    
+    @IBOutlet weak var feedNameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

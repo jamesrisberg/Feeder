@@ -21,6 +21,8 @@ class FeedPageViewController: UIPageViewController {
     
     @IBOutlet weak var addButton: UIBarButtonItem!
     
+    // MARK: Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,7 +31,7 @@ class FeedPageViewController: UIPageViewController {
         self.view.backgroundColor = UIColor.whiteColor()
                 
         if manager.feedCount() != 0 {
-            let firstViewController = manager.makeFeedViewController(manager.feedAtIndex(0))
+            let firstViewController = makeFeedViewController(manager.feedAtIndex(0))
             currentController = firstViewController
             setViewControllers([firstViewController], direction: .Forward, animated: true, completion: nil)
         } else {
@@ -41,6 +43,13 @@ class FeedPageViewController: UIPageViewController {
         }
         configureTopView()
     }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    // MARK: Initialization
     
     func configureTopView() {
         let topBarTapRecognizer = UITapGestureRecognizer(target: self, action: "scrollToTop")
@@ -64,6 +73,7 @@ class FeedPageViewController: UIPageViewController {
         let feedlessViewController = UIViewController()
         feedlessViewController.view.backgroundColor = UIColor.brownColor()
         let label = UILabel()
+        label.frame = CGRectMake(0,0,50,100)
         label.text = "no feeds"
         label.backgroundColor = UIColor.redColor()
         label.center = feedlessViewController.view.center
@@ -73,30 +83,16 @@ class FeedPageViewController: UIPageViewController {
         disablePaging()
     }
     
-    func disablePaging() {
-        for view in self.view.subviews {
-            if let subView = view as? UIScrollView {
-                subView.scrollEnabled = false
-            }
-        }
-    }
+    // MARK: Action
     
-    func enablePaging() {
-        for view in self.view.subviews {
-            if let subView = view as? UIScrollView {
-                subView.scrollEnabled = true
-            }
-        }
-    }
-    
-    func scrollToTop() {
+    private func scrollToTop() {
         if currentController != nil {
             let controller = currentController.childViewControllers[0] as! TWTRTimelineViewController
             controller.tableView.setContentOffset(CGPointZero, animated: true)
         }
     }
     
-    func composeTweet() {
+    private func composeTweet() {
         let composer = TWTRComposer()
         
         composer.showFromViewController(self) { result in
@@ -109,40 +105,110 @@ class FeedPageViewController: UIPageViewController {
         }
     }
     
-    @IBAction func presentAddFeedAlert(sender: UIButton) {
-        
-        let alertController = UIAlertController(title: "Add Feed", message: "Enter your custom query", preferredStyle: .Alert)
-        
-        let addAction = UIAlertAction(title: "Add", style: .Default) { (_) in
-            let feedTextField = alertController.textFields![0] as UITextField
-            
-            self.manager.addFeed(feedTextField.text!)
-            
-            if self.manager.feedCount() == 1 {
-                self.setViewControllers([self.manager.makeFeedViewController(self.manager.feedAtIndex(0))], direction: .Forward, animated: true, completion: nil)
-            }
-            if self.manager.feedCount() == 2 {
-                self.enablePaging()
+    // MARK: Helper
+    
+    private func disablePaging() {
+        for view in self.view.subviews {
+            if let subView = view as? UIScrollView {
+                subView.scrollEnabled = false
             }
         }
-        addAction.enabled = false
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in }
-        
-        alertController.addTextFieldWithConfigurationHandler { (textField) in
-            textField.placeholder = "Custom Query"
-            
-            NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidChangeNotification, object: textField, queue: NSOperationQueue.mainQueue()) { (notification) in
-                addAction.enabled = textField.text != ""
+    }
+    
+    private func enablePaging() {
+        for view in self.view.subviews {
+            if let subView = view as? UIScrollView {
+                subView.scrollEnabled = true
             }
         }
+    }
+    
+    private func makeFeedViewController(query: String) -> FeedViewController {
+        let viewController = FeedViewController()
+        viewController.setQueryString(query)
+        viewController.automaticallyAdjustsScrollViewInsets = false
         
-        alertController.addAction(addAction)
-        alertController.addAction(cancelAction)
+        let topView = UIView()
+        topView.backgroundColor = UIColor.whiteColor()
+        topView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.presentViewController(alertController, animated: true, completion: nil)
+        let feedLabel = UILabel()
+        feedLabel.text = manager.titleForQuery(query)
+        feedLabel.font = UIFont.systemFontOfSize(18.0, weight: UIFontWeightThin)
+        feedLabel.textColor = colorWithHexString("#00aced")
+        feedLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        topView.addSubview(feedLabel)
+        
+        let containerView = UIView()
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let dataSource = TWTRSearchTimelineDataSource(searchQuery: query, APIClient: manager.client)
+        let timelineView = TWTRTimelineViewController(dataSource: dataSource)
+        timelineView.showTweetActions = true
+        timelineView.view.backgroundColor = UIColor.whiteColor()
+        timelineView.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        viewController.addChildViewController(timelineView)
+        containerView.addSubview(timelineView.view)
+        timelineView.didMoveToParentViewController(viewController)
+        
+        viewController.view.addSubview(topView)
+        viewController.view.addSubview(containerView)
+        
+        let viewsDictionary = [
+            "topView" : topView,
+            "feedLabel" : feedLabel,
+            "containerView" : containerView,
+            "timelineView" : timelineView.view]
+        
+        let feedXCenterConstraint = NSLayoutConstraint(item: feedLabel, attribute: .CenterX, relatedBy: .Equal, toItem: topView, attribute: .CenterX, multiplier: 1, constant: 0)
+        
+        let feedLabelVerticalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
+            "V:|-10-[feedLabel]-10-|",
+            options: NSLayoutFormatOptions(rawValue:0),
+            metrics: nil, views: viewsDictionary)
+        
+        topView.addConstraint(feedXCenterConstraint)
+        topView.addConstraints(feedLabelVerticalConstraint)
+        
+        let timelineViewHorizontalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
+            "H:|-0-[timelineView]-0-|",
+            options: NSLayoutFormatOptions(rawValue:0),
+            metrics: nil, views: viewsDictionary)
+        
+        let timelineViewVerticalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
+            "V:|-0-[timelineView]-0-|",
+            options: NSLayoutFormatOptions(rawValue:0),
+            metrics: nil, views: viewsDictionary)
+        
+        containerView.addConstraints(timelineViewHorizontalConstraint)
+        containerView.addConstraints(timelineViewVerticalConstraint)
+        
+        let topViewHorizontalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
+            "H:|-0-[topView]-0-|",
+            options: NSLayoutFormatOptions(rawValue:0),
+            metrics: nil, views: viewsDictionary)
+        
+        let containerViewHorizontalConstraint = NSLayoutConstraint.constraintsWithVisualFormat(
+            "H:|-0-[containerView]-0-|",
+            options: NSLayoutFormatOptions(rawValue:0),
+            metrics: nil, views: viewsDictionary)
+        
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat(
+            "V:|-0-[topView]-0-[containerView]-0-|",
+            options: NSLayoutFormatOptions.AlignAllLeading,
+            metrics: nil, views: viewsDictionary)
+        
+        viewController.view.addConstraints(topViewHorizontalConstraint)
+        viewController.view.addConstraints(containerViewHorizontalConstraint)
+        viewController.view.addConstraints(verticalConstraints)
+        
+        return viewController
     }
 }
+
+// MARK: PageView Datasource
 
 extension FeedPageViewController: UIPageViewControllerDataSource {
     
@@ -158,7 +224,7 @@ extension FeedPageViewController: UIPageViewControllerDataSource {
                 return nil
             }
             
-            return manager.makeFeedViewController(manager.feedAtIndex(curr))
+            return makeFeedViewController(manager.feedAtIndex(curr))
     }
     
     func pageViewController(pageViewController: UIPageViewController,
@@ -173,9 +239,11 @@ extension FeedPageViewController: UIPageViewControllerDataSource {
                 return nil
             }
             
-            return manager.makeFeedViewController(manager.feedAtIndex(curr))
+            return makeFeedViewController(manager.feedAtIndex(curr))
     }
 }
+
+// MARK: PageView Delegate
 
 extension FeedPageViewController: UIPageViewControllerDelegate {
     

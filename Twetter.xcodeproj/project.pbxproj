@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E28156B1C70159300F3A147 /* AddFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E28156A1C70159300F3A147 /* AddFeedViewController.swift */; };
+		6E28156D1C7030E200F3A147 /* FeedListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E28156C1C7030E200F3A147 /* FeedListView.xib */; };
+		6E28156F1C70335600F3A147 /* FeedListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E28156E1C70335600F3A147 /* FeedListView.swift */; };
+		6E2815711C70496C00F3A147 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E2815701C70496C00F3A147 /* MainViewController.swift */; };
+		6E2815731C7064A000F3A147 /* FeedListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2815721C7064A000F3A147 /* FeedListCell.xib */; };
 		6EA153F11C69AED700382D00 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EA153F01C69AED700382D00 /* FeedViewController.swift */; };
 		6EDBFAE71C65C9EE004E4D60 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDBFAE61C65C9EE004E4D60 /* AppDelegate.swift */; };
 		6EDBFAEC1C65C9EE004E4D60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6EDBFAEA1C65C9EE004E4D60 /* Main.storyboard */; };
@@ -21,12 +26,16 @@
 		6EDBFB081C6605D3004E4D60 /* FeedPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDBFB071C6605D2004E4D60 /* FeedPageViewController.swift */; };
 		6EDBFB0C1C667766004E4D60 /* TWETFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDBFB0B1C667766004E4D60 /* TWETFeed.swift */; };
 		6EDBFB0E1C669C1F004E4D60 /* StringToColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDBFB0D1C669C1F004E4D60 /* StringToColor.swift */; };
-		6EDBFB101C66F193004E4D60 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDBFB0F1C66F193004E4D60 /* MenuViewController.swift */; };
-		6EDD8C991C6712960006F4D4 /* EditFeedsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDD8C981C6712960006F4D4 /* EditFeedsViewController.swift */; };
-		6EDD8C9B1C671C7C0006F4D4 /* QueryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDD8C9A1C671C7C0006F4D4 /* QueryCell.swift */; };
+		6EDD8C991C6712960006F4D4 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDD8C981C6712960006F4D4 /* FeedListViewController.swift */; };
+		6EDD8C9B1C671C7C0006F4D4 /* FeedListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDD8C9A1C671C7C0006F4D4 /* FeedListCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E28156A1C70159300F3A147 /* AddFeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFeedViewController.swift; sourceTree = "<group>"; };
+		6E28156C1C7030E200F3A147 /* FeedListView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedListView.xib; sourceTree = "<group>"; };
+		6E28156E1C70335600F3A147 /* FeedListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListView.swift; sourceTree = "<group>"; };
+		6E2815701C70496C00F3A147 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		6E2815721C7064A000F3A147 /* FeedListCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedListCell.xib; sourceTree = "<group>"; };
 		6EA153F01C69AED700382D00 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		6EDBFAE31C65C9EE004E4D60 /* Twetter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Twetter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EDBFAE61C65C9EE004E4D60 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,9 +52,8 @@
 		6EDBFB071C6605D2004E4D60 /* FeedPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedPageViewController.swift; sourceTree = "<group>"; };
 		6EDBFB0B1C667766004E4D60 /* TWETFeed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TWETFeed.swift; sourceTree = "<group>"; };
 		6EDBFB0D1C669C1F004E4D60 /* StringToColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringToColor.swift; sourceTree = "<group>"; };
-		6EDBFB0F1C66F193004E4D60 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
-		6EDD8C981C6712960006F4D4 /* EditFeedsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditFeedsViewController.swift; sourceTree = "<group>"; };
-		6EDD8C9A1C671C7C0006F4D4 /* QueryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QueryCell.swift; sourceTree = "<group>"; };
+		6EDD8C981C6712960006F4D4 /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
+		6EDD8C9A1C671C7C0006F4D4 /* FeedListCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,13 +91,17 @@
 			children = (
 				6EDBFAEA1C65C9EE004E4D60 /* Main.storyboard */,
 				6EDBFAEF1C65C9EE004E4D60 /* LaunchScreen.storyboard */,
+				6E28156C1C7030E200F3A147 /* FeedListView.xib */,
+				6E2815721C7064A000F3A147 /* FeedListCell.xib */,
 				6EDBFAE61C65C9EE004E4D60 /* AppDelegate.swift */,
 				6EDBFB031C65D45E004E4D60 /* LoginViewController.swift */,
-				6EDBFB0F1C66F193004E4D60 /* MenuViewController.swift */,
+				6E2815701C70496C00F3A147 /* MainViewController.swift */,
 				6EDBFB071C6605D2004E4D60 /* FeedPageViewController.swift */,
-				6EDD8C981C6712960006F4D4 /* EditFeedsViewController.swift */,
+				6EDD8C981C6712960006F4D4 /* FeedListViewController.swift */,
+				6E28156E1C70335600F3A147 /* FeedListView.swift */,
 				6EA153F01C69AED700382D00 /* FeedViewController.swift */,
-				6EDD8C9A1C671C7C0006F4D4 /* QueryCell.swift */,
+				6E28156A1C70159300F3A147 /* AddFeedViewController.swift */,
+				6EDD8C9A1C671C7C0006F4D4 /* FeedListCell.swift */,
 				6EDBFB011C65D11A004E4D60 /* FeedManager.swift */,
 				6EDBFB0B1C667766004E4D60 /* TWETFeed.swift */,
 				6EDBFB0D1C669C1F004E4D60 /* StringToColor.swift */,
@@ -165,7 +177,9 @@
 				6EDBFAFF1C65CCDB004E4D60 /* TwitterKitResources.bundle in Resources */,
 				6EDBFAF11C65C9EE004E4D60 /* LaunchScreen.storyboard in Resources */,
 				6EDBFAEE1C65C9EE004E4D60 /* Assets.xcassets in Resources */,
+				6E28156D1C7030E200F3A147 /* FeedListView.xib in Resources */,
 				6EDBFAEC1C65C9EE004E4D60 /* Main.storyboard in Resources */,
+				6E2815731C7064A000F3A147 /* FeedListCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,13 +206,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6E28156F1C70335600F3A147 /* FeedListView.swift in Sources */,
+				6E28156B1C70159300F3A147 /* AddFeedViewController.swift in Sources */,
 				6EDBFB081C6605D3004E4D60 /* FeedPageViewController.swift in Sources */,
+				6E2815711C70496C00F3A147 /* MainViewController.swift in Sources */,
 				6EDBFB0E1C669C1F004E4D60 /* StringToColor.swift in Sources */,
 				6EA153F11C69AED700382D00 /* FeedViewController.swift in Sources */,
-				6EDD8C9B1C671C7C0006F4D4 /* QueryCell.swift in Sources */,
+				6EDD8C9B1C671C7C0006F4D4 /* FeedListCell.swift in Sources */,
 				6EDBFB041C65D45E004E4D60 /* LoginViewController.swift in Sources */,
-				6EDBFB101C66F193004E4D60 /* MenuViewController.swift in Sources */,
-				6EDD8C991C6712960006F4D4 /* EditFeedsViewController.swift in Sources */,
+				6EDD8C991C6712960006F4D4 /* FeedListViewController.swift in Sources */,
 				6EDBFB0C1C667766004E4D60 /* TWETFeed.swift in Sources */,
 				6EDBFB021C65D11A004E4D60 /* FeedManager.swift in Sources */,
 				6EDBFAE71C65C9EE004E4D60 /* AppDelegate.swift in Sources */,

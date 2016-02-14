@@ -1,15 +1,109 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="FeedListView" customModule="Twetter" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="50" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Fwy-W1-FaE">
+                    <rect key="frame" x="0.0" y="56" width="600" height="504"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V5s-UD-2Ow">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="56"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upArrow" translatesAutoresizingMaskIntoConstraints="NO" id="Oer-5j-f4k">
+                            <rect key="frame" x="540" y="0.0" width="50" height="56"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="8aN-Lr-A2U"/>
+                            </constraints>
+                        </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upArrow" translatesAutoresizingMaskIntoConstraints="NO" id="hb9-ue-loe">
+                            <rect key="frame" x="10" y="0.0" width="50" height="56"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="50" id="NyM-h4-3N9"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="My Feeds" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fpr-bQ-pcZ">
+                            <rect key="frame" x="251" y="17" width="98" height="29"/>
+                            <fontDescription key="fontDescription" type="system" weight="thin" pointSize="24"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.0" green="0.67450980390000004" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="Fpr-bQ-pcZ" secondAttribute="bottom" constant="10" id="3Cx-gb-EDr"/>
+                        <constraint firstAttribute="bottom" secondItem="Oer-5j-f4k" secondAttribute="bottom" id="9nT-DT-cRE"/>
+                        <constraint firstItem="hb9-ue-loe" firstAttribute="leading" secondItem="V5s-UD-2Ow" secondAttribute="leading" constant="10" id="AfV-ES-396"/>
+                        <constraint firstAttribute="bottom" secondItem="hb9-ue-loe" secondAttribute="bottom" id="MP3-yw-hSk"/>
+                        <constraint firstItem="Oer-5j-f4k" firstAttribute="top" secondItem="V5s-UD-2Ow" secondAttribute="top" id="MvX-O1-lT8"/>
+                        <constraint firstAttribute="height" constant="56" id="jge-bg-n3r"/>
+                        <constraint firstItem="Fpr-bQ-pcZ" firstAttribute="centerX" secondItem="V5s-UD-2Ow" secondAttribute="centerX" id="lml-b7-my1"/>
+                        <constraint firstAttribute="trailing" secondItem="Oer-5j-f4k" secondAttribute="trailing" constant="10" id="u2f-WV-g8R"/>
+                        <constraint firstItem="hb9-ue-loe" firstAttribute="top" secondItem="V5s-UD-2Ow" secondAttribute="top" id="vMp-M6-BGo"/>
+                    </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="Ia5-dA-3cE" appends="YES" id="2GJ-fa-4fc"/>
+                        <outletCollection property="gestureRecognizers" destination="FdP-BI-3zK" appends="YES" id="3bj-dg-psd"/>
+                    </connections>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PvX-s9-MBD">
+                    <rect key="frame" x="0.0" y="560" width="600" height="40"/>
+                    <color key="backgroundColor" red="0.0" green="0.67450980390000004" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="C4Y-Mf-2g8"/>
+                    </constraints>
+                    <state key="normal" title="Add Feed"/>
+                </button>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="V5s-UD-2Ow" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="0YE-ln-QGB"/>
+                <constraint firstAttribute="trailing" secondItem="Fwy-W1-FaE" secondAttribute="trailing" id="2UW-ex-Mji"/>
+                <constraint firstAttribute="bottom" secondItem="Fwy-W1-FaE" secondAttribute="bottom" id="9ZS-kw-lc1"/>
+                <constraint firstAttribute="trailing" secondItem="PvX-s9-MBD" secondAttribute="trailing" id="Dnv-1i-9TD"/>
+                <constraint firstItem="PvX-s9-MBD" firstAttribute="top" secondItem="Fwy-W1-FaE" secondAttribute="bottom" id="Fc4-uz-aME"/>
+                <constraint firstAttribute="bottom" secondItem="PvX-s9-MBD" secondAttribute="bottom" id="MBa-ZL-IfR"/>
+                <constraint firstItem="PvX-s9-MBD" firstAttribute="top" secondItem="Fwy-W1-FaE" secondAttribute="bottom" id="R83-R6-LOc"/>
+                <constraint firstItem="PvX-s9-MBD" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="YQ9-1e-qx9"/>
+                <constraint firstItem="V5s-UD-2Ow" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="erI-g6-H9r"/>
+                <constraint firstItem="Fwy-W1-FaE" firstAttribute="top" secondItem="V5s-UD-2Ow" secondAttribute="bottom" id="ics-MD-Mdc"/>
+                <constraint firstItem="Fwy-W1-FaE" firstAttribute="top" secondItem="V5s-UD-2Ow" secondAttribute="bottom" id="uMj-pS-Cvz"/>
+                <constraint firstAttribute="trailing" secondItem="V5s-UD-2Ow" secondAttribute="trailing" id="xEQ-JF-tlx"/>
+                <constraint firstItem="Fwy-W1-FaE" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="yQG-FV-kqw"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="9ZS-kw-lc1"/>
+                    <exclude reference="uMj-pS-Cvz"/>
+                    <exclude reference="Fc4-uz-aME"/>
+                </mask>
+            </variation>
+            <connections>
+                <outlet property="tableview" destination="Fwy-W1-FaE" id="LKo-nE-VP2"/>
+                <outlet property="titleLabel" destination="Fpr-bQ-pcZ" id="y7j-rj-Ik5"/>
+            </connections>
         </view>
+        <swipeGestureRecognizer direction="up" id="Ia5-dA-3cE">
+            <connections>
+                <action selector="handleSwipe:" destination="iN0-l3-epB" id="sqF-eB-31X"/>
+            </connections>
+        </swipeGestureRecognizer>
+        <swipeGestureRecognizer direction="down" id="FdP-BI-3zK">
+            <connections>
+                <action selector="handleSwipe:" destination="iN0-l3-epB" id="XZJ-Xs-Bhv"/>
+            </connections>
+        </swipeGestureRecognizer>
     </objects>
+    <resources>
+        <image name="upArrow" width="906" height="186"/>
+    </resources>
 </document>

@@ -8,62 +8,37 @@
 
 import UIKit
 
-class FeedListViewController: UIViewController {
+class FeedListViewController: NSObject {
     
     let prefs = NSUserDefaults.standardUserDefaults()
-    @IBOutlet weak var tableview: UITableView!
     
     let manager = FeedManager.sharedInstance
     
-    lazy var refreshControl: UIRefreshControl = {
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
-        
-        return refreshControl
-    }()
+    // MARK: Gesture Handlers
     
-    override func viewDidLoad() {
-        self.tableview.addSubview(self.refreshControl)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func handleRefresh(refreshControl: UIRefreshControl) {
-        self.tableview.reloadData()
-        refreshControl.endRefreshing()
-    }
-    
-    @IBAction func presentAddFeedAlert() {
-        
-        let alertController = UIAlertController(title: "Add Feed", message: "Enter your custom query", preferredStyle: .Alert)
-        
-        let addAction = UIAlertAction(title: "Add", style: .Default) { (_) in
-            let feedTextField = alertController.textFields![0] as UITextField
+    func handleSwipeUp(sender: UISwipeGestureRecognizer, listView: FeedListView) {
+        UIView.animateWithDuration(0.7, delay: 0.0, options: .CurveEaseOut, animations: {
+            listView.frame = UIScreen.mainScreen().bounds
             
-            self.manager.addFeed(feedTextField.text!)
-            self.tableview.reloadData()
-        }
-        addAction.enabled = false
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (_) in }
-        
-        alertController.addTextFieldWithConfigurationHandler { (textField) in
-            textField.placeholder = "Custom Query"
+            listView.titleLabel.alpha = 1.0
+            }, completion: { finished in
+        })
+    }
+    
+    func handleSwipeDown(sender: UISwipeGestureRecognizer, listView: FeedListView) {
+        UIView.animateWithDuration(0.7, delay: 0.0, options: .CurveEaseOut, animations: {
+            var frame = UIScreen.mainScreen().bounds
+            frame.origin.y = frame.height - 50
+            listView.frame = frame
             
-            NSNotificationCenter.defaultCenter().addObserverForName(UITextFieldTextDidChangeNotification, object: textField, queue: NSOperationQueue.mainQueue()) { (notification) in
-                addAction.enabled = textField.text != ""
-            }
-        }
-        
-        alertController.addAction(addAction)
-        alertController.addAction(cancelAction)
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
+            listView.titleLabel.alpha = 0.0
+            
+            }, completion: { finished in
+        })
     }
 }
+
+// MARK: Table Datasource
 
 extension FeedListViewController: UITableViewDataSource {
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -75,12 +50,14 @@ extension FeedListViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("queryCell", forIndexPath: indexPath) as! QueryCell
-        cell.queryLabel.text = manager.feedTitleAtIndex(indexPath.row)
+        let cell = tableView.dequeueReusableCellWithIdentifier("feedListCell", forIndexPath: indexPath) as! FeedListCell
+        cell.feedNameLabel.text = manager.feedTitleAtIndex(indexPath.row)
         
         return cell
     }
 }
+
+// MARK: Table Delegate
 
 extension FeedListViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -90,7 +67,7 @@ extension FeedListViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if (editingStyle == UITableViewCellEditingStyle.Delete) {
             manager.removeFeed(indexPath.row)
-            self.tableview.reloadData()
+            tableView.reloadData()
         }
     }
 }
