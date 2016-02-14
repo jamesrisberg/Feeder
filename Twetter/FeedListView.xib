@@ -62,6 +62,9 @@
                         <constraint firstAttribute="height" constant="40" id="C4Y-Mf-2g8"/>
                     </constraints>
                     <state key="normal" title="Add Feed"/>
+                    <connections>
+                        <action selector="addFeedButtonTouched:" destination="iN0-l3-epB" eventType="touchUpInside" id="pEV-w7-x65"/>
+                    </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -88,6 +91,7 @@
                 </mask>
             </variation>
             <connections>
+                <outlet property="addFeedButton" destination="PvX-s9-MBD" id="VSl-AF-e1U"/>
                 <outlet property="tableview" destination="Fwy-W1-FaE" id="LKo-nE-VP2"/>
                 <outlet property="titleLabel" destination="Fpr-bQ-pcZ" id="y7j-rj-Ik5"/>
             </connections>

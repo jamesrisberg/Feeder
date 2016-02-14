@@ -11,6 +11,7 @@ import TwitterKit
 
 class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     // MARK: Lifecycle
     
@@ -37,10 +38,12 @@ class LoginViewController: UIViewController {
     
     @IBAction func signInWithTwitter(sender: UIButton) {
         sender.enabled = false
+        activityIndicator.startAnimating()
         
         Twitter.sharedInstance().logInWithCompletion { (session, error) in
             if let _ = session {
                 sender.enabled = true
+                self.activityIndicator.stopAnimating()
                 self.loggedIn()
             } else {
                 sender.enabled = true

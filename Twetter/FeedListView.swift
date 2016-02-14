@@ -12,6 +12,8 @@ class FeedListView: UIView {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var tableview: UITableView!
+    @IBOutlet weak var addFeedButton: UIButton!
+    
     var listController: FeedListViewController!
     
     lazy var refreshControl: UIRefreshControl = {
@@ -27,7 +29,7 @@ class FeedListView: UIView {
         return UINib(
             nibName: nibNamed,
             bundle: bundle
-            ).instantiateWithOwner(nil, options: nil)[0] as? FeedListView
+            ).instantiateWithOwner(self, options: nil)[0] as? FeedListView
     }
     
     override init(frame: CGRect) {
@@ -54,6 +56,10 @@ class FeedListView: UIView {
     }
     
     // MARK: Actions
+    
+    @IBAction func addFeedButtonTouched(sender: UIButton) {
+        self.listController.presentAddFeedView(self)
+    }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
         self.tableview.reloadData()

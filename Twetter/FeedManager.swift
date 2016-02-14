@@ -64,7 +64,7 @@ class FeedManager: NSObject {
     
     // TODO: Way more complicated feeds
     
-    private func titleForQuery(query: String) -> String {
+    func titleForQuery(query: String) -> String {
         return query.stringByReplacingOccurrencesOfString("OR ", withString:"")
     }
     

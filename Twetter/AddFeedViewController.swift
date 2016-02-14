@@ -8,33 +8,28 @@
 
 import UIKit
 
-class AddFeedViewController: UIViewController {
-
-    @IBOutlet weak var includeCollectionView: UICollectionView!
-    @IBOutlet weak var excludeCollectionView: UICollectionView!
-    @IBOutlet weak var includeField: UITextField!
-    @IBOutlet weak var excludeField: UITextField!
-    @IBOutlet weak var addFeedButton: UIButton!
-    @IBOutlet weak var feedNameField: UITextField!
-    
-    // MARK: Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
+class AddFeedViewController: NSObject {
     
     // MARK: Action
     
-    @IBAction func addFeedButtonTouched(sender: UIButton) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func addFeedButtonTouched(sender: AddFeedView) {
+        UIView.animateWithDuration(0.4, delay: 0.0, options: .CurveEaseOut, animations: {
+            var myFrame = UIScreen.mainScreen().bounds
+            myFrame.origin.y = myFrame.height
+            sender.frame = myFrame
+            
+            }, completion: { finished in
+        })
+    }
+    
+    func cancelButtonTouched(sender: AddFeedView) {
+        UIView.animateWithDuration(0.4, delay: 0.0, options: .CurveEaseOut, animations: {
+            var myFrame = UIScreen.mainScreen().bounds
+            myFrame.origin.y = myFrame.height
+            sender.frame = myFrame
+            
+            }, completion: { finished in
+        })
     }
 }
 
@@ -56,9 +51,9 @@ extension AddFeedViewController: UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("feedTermCell", forIndexPath: indexPath) as! UICollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("termCell", forIndexPath: indexPath) as! AddFeedCollectionViewCell
         
-        cell.backgroundColor = UIColor.blackColor()
+        cell.termLabel.text = "Term Here"
         
         return cell
     }

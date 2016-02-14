@@ -14,10 +14,28 @@ class FeedListViewController: NSObject {
     
     let manager = FeedManager.sharedInstance
     
+    func presentAddFeedView(listView: FeedListView) {
+        let addFeedView = AddFeedView.loadFromNibNamed("AddFeedView")
+        addFeedView!.configureWithController(AddFeedViewController())
+        
+        var screenFrame = UIScreen.mainScreen().bounds;
+        screenFrame.origin.y = screenFrame.height;
+        addFeedView?.frame = screenFrame
+        
+        listView.addSubview(addFeedView!)
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut, animations: {
+            screenFrame.origin.y = 0.0;
+            addFeedView?.frame = screenFrame
+            
+            }, completion: { finished in
+        })
+    }
+    
     // MARK: Gesture Handlers
     
     func handleSwipeUp(sender: UISwipeGestureRecognizer, listView: FeedListView) {
-        UIView.animateWithDuration(0.7, delay: 0.0, options: .CurveEaseOut, animations: {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut, animations: {
             listView.frame = UIScreen.mainScreen().bounds
             
             listView.titleLabel.alpha = 1.0
@@ -26,7 +44,7 @@ class FeedListViewController: NSObject {
     }
     
     func handleSwipeDown(sender: UISwipeGestureRecognizer, listView: FeedListView) {
-        UIView.animateWithDuration(0.7, delay: 0.0, options: .CurveEaseOut, animations: {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut, animations: {
             var frame = UIScreen.mainScreen().bounds
             frame.origin.y = frame.height - 50
             listView.frame = frame

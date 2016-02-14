@@ -14,7 +14,7 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         addListView()
     }
 
@@ -31,5 +31,13 @@ class MainViewController: UIViewController {
         listView?.frame = myFrame
         
         self.view.addSubview(listView!)
+    }
+    
+    @IBAction func settingsButtonTouched(sender: UIButton) {
+        
+    }
+    
+    @IBAction func homeButtonTouched(sender: UIButton) {
+        
     }
 }
