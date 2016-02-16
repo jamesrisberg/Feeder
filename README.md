@@ -1,15 +1,16 @@
-## Twetter
+## Feeder
 
-Twetter is like Twitter but better.
+### **The Problem**
 
-One of Twitter's many (many, many, many) issues and the one I see as the most glaring is the inability to make custom feeds.
-The deluge of content a user is faced with when they open the Twitter app is simultaneously overwhelming and useless. If I 
-can't find the content I'm interested in within a sea of tweets, the service brings no value and I have no use for it. 
+Twitter is suffering from content overload. The average user goes to Twitter to consume some of the endless content the community provides; but they can't find it. Surfacing content in the ever raging sea of Tweets is nigh on impossible, simply because there's too much stuff and none is organized. 
 
-Twetter lets you define your own custom search queries with which to construct feeds of tweets based around your interests. 
-Using any combonation of hastags and keywords, you can build any feed your heart desires, from the serious to the silly.
+### **Enter Feeder**
 
-Sports lovers may want a feed fed from #NFL, #NHL, and #MLB. A political activist may be more interested in a feed fed from breakingnews, protest, or @CNN. Someone may even want a feed of every tweet that mentions pineapples. The possibilities are
-endless.
+Feeder lets you build custom feeds of tweets from all across Twitter from #hashtags, words, accounts, or any other way to describe a tweet, with fine-grained control over what does and doesn't show up in your feed. All through a simple interface that lets users see exactly what they're being fed at any time.
 
-Build a better Twitter. Use Twetter.
+You could make a feed for your squad, and see what your friends are up to; sports lovers may build a feed of all their favorite team accounts and any tweet with the hashtag #GoGators; Photographers may be interested in a feed of only images with captions that mention nature or contain #art. The possibilities are endless with Feeder.
+
+### **Why use Feeder?**
+
+Feeder takes the mosh pit that is your timeline and tames the beast, corralling cantankerous content into focused feeds that let you spend less time digging and more time enjoying your tweets. The amount of content on Twitter is vast and eclectic, and there is some really cool stuff most people don't even know is out there. Surface the content you care about with Feeder.
+
